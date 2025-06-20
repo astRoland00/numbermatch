@@ -32,12 +32,13 @@ function AddRows() {
         let rowrect = rowbutton.getBoundingClientRect()
         let count = document.createElement("p")
         count.textContent = countrow
-        count.style.left = rowrect.width+105+"px"
-        count.style.top = "-"+rowrect.height/2+"px"
-        rowbutton.appendChild(count)
-        rowbutton.replaceChildren("+",count)
+        count.style.left = rowrect.width/3+"vw"
+        count.style.top = "-"+rowrect.height/2+"vw"
+        document.querySelector("footer").appendChild(count)
+        document.querySelector("footer").replaceChildren(rowbutton,count)
         for (let x = 0; x < 30; x++) {
             let button = document.createElement("button")
+            button.classList.add("block")
             button.onclick = function(){
                 button.style.backgroundColor = "lightblue"
                 if (selected.length == 2) {
@@ -53,22 +54,35 @@ function AddRows() {
                     let first = selected[0].name
                     let second = selected[1].name
 
-                    if ((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 ) && (Math.abs(first-second) == 1 || Math.abs(first-second) == 10 || Math.abs(first-second) == 11 || Math.abs(first-second) == 9)) {
+                    if ((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 ) && (Math.abs(first-second) == 1 || Math.abs(first-second) == 8 || Math.abs(first-second) == 7 || Math.abs(first-second) == 9 )) {
                         let text1 = document.createElement("h2")
                         text1.textContent = selected[0].textContent
-                        main.childNodes[first].appendChild(text1)
+                        main.childNodes[first-1].appendChild(text1)
                         let text2 = document.createElement("h2")
                         text2.textContent = selected[1].textContent
-                        main.childNodes[second].appendChild(text2)
+                        main.childNodes[second-1].appendChild(text2)
                         selected.forEach(element => {
                             element.remove()
                             console.log(element)
                         });
                         selected = []
-                    }else{
+                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&(CheckBetween(first,second,+9)||CheckBetween(first,second,parseInt(Math.abs(first-second)/8)))){
+                        let text1 = document.createElement("h2")
+                        text1.textContent = selected[0].textContent
+                        main.childNodes[first-1].appendChild(text1)
+                        let text2 = document.createElement("h2")
+                        text2.textContent = selected[1].textContent
+                        main.childNodes[second-1].appendChild(text2)
+                        selected.forEach(element => {
+                            element.remove()
+                            console.log("jo es keresztbe van")
+                        });
+                        selected = []
+                    }
+                    else{
                         selected.forEach(element => {
                             element.style.backgroundColor = "rgb(220, 229, 236)"
-                            console.log(element)
+                            console.log("bukott")
                         });
                         selected = []
                     }
@@ -84,14 +98,37 @@ function AddRows() {
             let r = Math.floor(Math.random() * 9)
             button.textContent = r
             //matrix[Math.floor(matrix.length/x+1)][matrix%x+1] = r
-            console.log(Math.floor(matrix.length/x))
-            console.log(matrix%x)
-            button.name = last+x
+
+            button.name = last+x+1
             main.childNodes[last+x].appendChild(button)
             
         }
         last += 30
     }
+    
+}
+function CheckBetween(first,second,dif) {
+    let start
+    if (parseInt(first)<parseInt(second)) {
+        start = parseInt(first)
+    }else{
+        start = parseInt(second)
+    }
+    
+
+    for (let i = 1; i < (Math.abs(parseInt(first)-parseInt(second))%8); i++) {
+        const currentNode = main.childNodes[start - 1 + (parseInt(dif) * i)]
+        console.warn(currentNode.childNodes[0])
+        console.log(parseInt(dif) * i)
+        console.log("eddig megy: "+(Math.abs(parseInt(first)-parseInt(second))/8))
+        
+        if (!currentNode || currentNode.childNodes[0].classList.contains("block")) {
+            console.log(`rossz ${start + (dif * i)} -> ${+(dif * i)} -> ${i}`)
+            return false;
+        }
+    }
+    console.log("atment")
+    return true;
     
 }
 function Select(button) {

@@ -24,28 +24,31 @@ footer{
     display: block;
     margin: auto;
     position: fixed;
-    bottom: 1%;
-    left: 41.5%;
-    
-    background-color: rgba(66, 82, 126,0.782);
-    width: 250px;
-    height: 50px;
-    border-radius: 70px;
-    border: 1px black solid;
+    bottom: 1vw;
+    left: 39.94vw;
+    background-color: rgba(66, 82, 126,50%);
+    width: 285px;
+    height: 70px;
+    border-radius: 5vw;
+    box-shadow:0 0 40px 10px rgba(66, 82, 126,50%);
 
 }
 footer>button{
-
-    height: 40px;
-    width: 40px;
+    filter: blur(0%);
+    -webkit-filter: blur(0%);
+    height: 60px;
+    width: 60px;
     display: block;
     margin: auto;
-    margin-top: 5px;
-    border-radius: 20px;
-    font-size: xx-large;
+
+    border-radius: 60px;
+    font-size: 3vw;
     color: black;
+    line-height: 3vw;
+    text-align: center;
+    z-index: 4;
 }
-footer>button>p{
+footer>p{
     position: absolute;
     z-index: 3;
     font-size: large;
