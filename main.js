@@ -11,7 +11,7 @@ function MatrixIndex(i) {
 function Loader() {
     for (let i = 0; i < 15; i++) {
         let row = []
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < 8; j++) {
             let div = document.createElement("div")
             div.classList.add("element")
             div.style.width = "50px"

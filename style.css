@@ -7,7 +7,7 @@ body{
 main{
     display: grid;
     margin: auto;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(15, 1fr);
     height: fit-content;
     width: fit-content;
@@ -43,6 +43,7 @@ footer>button{
     margin-top: 5px;
     border-radius: 20px;
     font-size: xx-large;
+    color: black;
 }
 footer>button>p{
     position: absolute;
