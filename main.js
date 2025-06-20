@@ -66,7 +66,7 @@ function AddRows() {
                             console.log(element)
                         });
                         selected = []
-                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&(CheckBetween(first,second,+9)||CheckBetween(first,second,parseInt(Math.abs(first-second)/8)))){
+                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&(CheckBetween(first,second,+9)||CheckBetween(first,second))){
                         let text1 = document.createElement("h2")
                         text1.textContent = selected[0].textContent
                         main.childNodes[first-1].appendChild(text1)
@@ -107,16 +107,26 @@ function AddRows() {
     }
     
 }
-function CheckBetween(first,second,dif) {
+function CheckBetween(first,second) {
     let start
+    let dif
     if (parseInt(first)<parseInt(second)) {
         start = parseInt(first)
     }else{
         start = parseInt(second)
     }
+    if (Math.abs(first-second)%7==0) {
+        dif=7
+    }else if(Math.abs(first-second)%8==0){
+        dif = 8
+    }else if(Math.abs(first-second)%9==0){
+        dif = 9
+    }
+
+
     
 
-    for (let i = 1; i < (Math.abs(parseInt(first)-parseInt(second))%8); i++) {
+    for (let i = 1; i < Math.round(Math.abs(parseInt(first)-parseInt(second))/8); i++) {
         const currentNode = main.childNodes[start - 1 + (parseInt(dif) * i)]
         console.warn(currentNode.childNodes[0])
         console.log(parseInt(dif) * i)
