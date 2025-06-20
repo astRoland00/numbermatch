@@ -25,11 +25,12 @@ footer{
     margin: auto;
     position: fixed;
     bottom: 1vw;
-    left: 39.94vw;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: rgba(66, 82, 126,50%);
     width: 285px;
     height: 70px;
-    border-radius: 5vw;
+    border-radius: 70px;
     box-shadow:0 0 40px 10px rgba(66, 82, 126,50%);
 
 }
@@ -42,7 +43,7 @@ footer>button{
     margin: auto;
 
     border-radius: 60px;
-    font-size: 3vw;
+    font-size: xx-large;
     color: black;
     line-height: 3vw;
     text-align: center;

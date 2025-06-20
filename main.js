@@ -39,7 +39,7 @@ function AddRows() {
         for (let x = 0; x < 30; x++) {
             let button = document.createElement("button")
             button.classList.add("block")
-            button.onclick = function(){
+            button.addEventListener('touchend', function (ev) {
                 button.style.backgroundColor = "lightblue"
                 if (selected.length == 2) {
                     
@@ -94,7 +94,63 @@ function AddRows() {
                 else{
                     selected.push(button)
                 }
-            }
+            })
+            button.addEventListener('click', function (ev) {
+                button.style.backgroundColor = "lightblue"
+                if (selected.length == 2) {
+                    
+                    selected.forEach(element => {
+                        element.style.backgroundColor = "rgb(220, 229, 236)"
+                        console.log(element)
+                    });
+                    selected = []
+                    selected.push(button)
+                }else if(selected.length==1 && selected[0] != button){
+                    selected.push(button)
+                    let first = selected[0].name
+                    let second = selected[1].name
+
+                    if ((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 ) && (Math.abs(first-second) == 1 || Math.abs(first-second) == 8 || Math.abs(first-second) == 7 || Math.abs(first-second) == 9 )) {
+                        let text1 = document.createElement("h2")
+                        text1.textContent = selected[0].textContent
+                        main.childNodes[first-1].appendChild(text1)
+                        let text2 = document.createElement("h2")
+                        text2.textContent = selected[1].textContent
+                        main.childNodes[second-1].appendChild(text2)
+                        selected.forEach(element => {
+                            element.remove()
+                            console.log(element)
+                        });
+                        selected = []
+                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&(CheckBetween(first,second,+9)||CheckBetween(first,second))){
+                        let text1 = document.createElement("h2")
+                        text1.textContent = selected[0].textContent
+                        main.childNodes[first-1].appendChild(text1)
+                        let text2 = document.createElement("h2")
+                        text2.textContent = selected[1].textContent
+                        main.childNodes[second-1].appendChild(text2)
+                        selected.forEach(element => {
+                            element.remove()
+                            console.log("jo es keresztbe van")
+                        });
+                        selected = []
+                    }
+                    else{
+                        selected.forEach(element => {
+                            element.style.backgroundColor = "rgb(220, 229, 236)"
+                            console.log("bukott")
+                        });
+                        selected = []
+                    }
+                }
+                else if(selected.length==1 && selected[0] == button){
+                    selected[0].style.backgroundColor = "rgb(220, 229, 236)"
+                    selected = []
+                }
+                else{
+                    selected.push(button)
+                }
+            })
             let r = Math.floor(Math.random() * 9)
             button.textContent = r
             //matrix[Math.floor(matrix.length/x+1)][matrix%x+1] = r
