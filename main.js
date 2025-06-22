@@ -66,7 +66,31 @@ function AddRows() {
                             console.log(element)
                         });
                         selected = []
-                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&(CheckBetween(first,second,+9)||CheckBetween(first,second))){
+                    }else if(((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(((Math.abs(first-second)%8)+((Math.abs(first-second)%8)*0.125) == Math.abs(first-second)/8)||((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)))&&CheckBetween(first,second)){
+                        let text1 = document.createElement("h2")
+                        text1.textContent = selected[0].textContent
+                        main.childNodes[first-1].appendChild(text1)
+                        let text2 = document.createElement("h2")
+                        text2.textContent = selected[1].textContent
+                        main.childNodes[second-1].appendChild(text2)
+                        selected.forEach(element => {
+                            element.remove()
+                            console.log("jo es keresztbe van")
+                        });
+                        selected = []
+                    }else if((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(Math.abs(first-second)/8<2)&&(CheckBetweenHorizontal(first,second))){
+                        let text1 = document.createElement("h2")
+                        text1.textContent = selected[0].textContent
+                        main.childNodes[first-1].appendChild(text1)
+                        let text2 = document.createElement("h2")
+                        text2.textContent = selected[1].textContent
+                        main.childNodes[second-1].appendChild(text2)
+                        selected.forEach(element => {
+                            element.remove()
+                            console.log("jo es keresztbe van")
+                        });
+                        selected = []
+                    }else if((selected[0].textContent == selected[1].textContent || parseInt(selected[0].textContent) + parseInt(selected[1].textContent) == 10 )&&(Math.abs(first-second)%8==0)&&(CheckBetweenVertical(first,second))){
                         let text1 = document.createElement("h2")
                         text1.textContent = selected[0].textContent
                         main.childNodes[first-1].appendChild(text1)
@@ -97,7 +121,7 @@ function AddRows() {
             }
             
             let r = Math.floor(Math.random() * 9)
-            button.textContent = r
+            button.textContent = r+1
             //matrix[Math.floor(matrix.length/x+1)][matrix%x+1] = r
 
             button.name = last+x+1
@@ -111,27 +135,35 @@ function AddRows() {
 function CheckBetween(first,second) {
     let start
     let dif
+    let plus
     if (parseInt(first)<parseInt(second)) {
         start = parseInt(first)
     }else{
         start = parseInt(second)
     }
-    if (Math.abs(first-second)%7==0) {
-        dif=7
-    }else if(Math.abs(first-second)%8==0){
-        dif = 8
-    }else if(Math.abs(first-second)%9==0){
-        dif = 9
+    if (Math.abs(first-second)/8>2) {
+        if (Math.abs(first-second)%7==0) {
+            dif=7
+        }else if(Math.abs(first-second)%8==0){
+            dif = 8
+        }else if(Math.abs(first-second)%9==0){
+            dif = 9
+        }
+        if (((Math.abs(first-second)%8)-((Math.abs(first-second)%8)*0.125)-3.5 == Math.abs(first-second)/8)) {
+            plus = 1
+        }else{ plus = 0}
+    }else{
+        dif = 1
     }
-
+    
 
     
 
-    for (let i = 1; i < Math.round(Math.abs(parseInt(first)-parseInt(second))/8); i++) {
+    for (let i = 1; i < Math.floor(Math.abs(parseInt(first)-parseInt(second))/8)+plus; i++) {
         const currentNode = main.childNodes[start - 1 + (parseInt(dif) * i)]
         console.warn(currentNode.childNodes[0])
         console.log(parseInt(dif) * i)
-        console.log("eddig megy: "+(Math.abs(parseInt(first)-parseInt(second))/8))
+        console.log("eddig megy: "+(Math.floor(Math.abs(parseInt(first)-parseInt(second))/8)+plus))
         
         if (!currentNode || currentNode.childNodes[0].classList.contains("block")) {
             console.log(`rossz ${start + (dif * i)} -> ${+(dif * i)} -> ${i}`)
@@ -141,6 +173,43 @@ function CheckBetween(first,second) {
     console.log("atment")
     return true;
     
+}
+function CheckBetweenHorizontal(first,second) {
+    let start
+
+    if (first<second) {
+        start = first
+    }else{
+        start = second
+    }
+    for (let i = 1; i <  Math.abs(first-second); i++) {
+        const currentNode = main.childNodes[start - 1 + (i)]
+        console.log(currentNode)
+        if (!currentNode || currentNode.childNodes[0].classList.contains("block")) {
+            console.log(`rossz ${start + (i)} -> ${(i)*8}`)
+            return false;
+        }
+    }
+    return true
+}
+
+function CheckBetweenVertical(first,second) {
+    let start
+
+    if (first<second) {
+        start = first
+    }else{
+        start = second
+    }
+    for (let i = 1; i <  Math.abs(first-second)-1; i++) {
+        const currentNode = main.childNodes[start - 1 + (i*8)]
+        console.log(currentNode)
+        if (!currentNode || currentNode.childNodes[0].classList.contains("block")) {
+            console.log(`rossz ${start + (i*8)} -> ${(i)}`)
+            return false;
+        }
+    }
+    return true
 }
 function Select(button) {
     button.style.backgroundcolor = "blue"
